@@ -1,10 +1,13 @@
 package org.anton_u.tripium_test_task.service;
 
-import org.anton_u.tripium_test_task.entity.Lecture;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface ConsoleHandlerService {
-     Lecture findHeadByName(String departmentName);
+     String findHeadByName(String departmentName);
+     String getDepartmentStatistic(String departmentName);
+     String getAverageSalary(String departmentName);
+     String getLecturesCount(String departmentName);
 
+     String getLectureNameByPattern(String pattern);
 }

@@ -13,10 +13,9 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "departments")
 public class Department {
@@ -39,5 +38,47 @@ public class Department {
     @JoinTable(name = "department_lecture",
                joinColumns = @JoinColumn(name = "department_id"),
                inverseJoinColumns = @JoinColumn(name = "lecture_id"))
-    private Set<Lecture> lectures;
+    private Set<Lecture> lectures = new HashSet<>();
+
+    public void addLecture(Lecture lecture) {
+        lectures.add(lecture);
+        lecture.getDepartments().add(this);
+    }
+
+    public void removeTag(Lecture lecture) {
+        lectures.remove(lecture);
+        lecture.getDepartments().remove(this);
+    }
+
+    public Lecture getHead() {
+        return head;
+    }
+
+    public void setHead(Lecture head) {
+        this.head = head;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<Lecture> getLectures() {
+        return lectures;
+    }
+
+    public void setLectures(Set<Lecture> lectures) {
+        this.lectures = lectures;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

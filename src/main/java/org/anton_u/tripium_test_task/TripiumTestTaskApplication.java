@@ -1,35 +1,47 @@
 package org.anton_u.tripium_test_task;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.anton_u.tripium_test_task.comands_handler.CommandHandler;
+import org.anton_u.tripium_test_task.comands_handler.ConsoleCommandHandler;
+import org.anton_u.tripium_test_task.repo.DepartmentRepository;
+import org.anton_u.tripium_test_task.repo.LectureRepository;
+import org.anton_u.tripium_test_task.util.FakeDataGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Scanner;
 
 @SpringBootApplication
-@Slf4j
-@RequiredArgsConstructor
 public class TripiumTestTaskApplication implements CommandLineRunner {
 
+    private final ConsoleCommandHandler consoleCommandHandler;
+    private final FakeDataGenerator fakeDataGenerator;
 
-    private final CommandHandler commandHandler;
+    @Autowired
+    public TripiumTestTaskApplication(ConsoleCommandHandler consoleCommandHandler, LectureRepository lectureRepository, DepartmentRepository departmentRepository, FakeDataGenerator fakeDataGenerator) {
+        this.consoleCommandHandler = consoleCommandHandler;
+        this.fakeDataGenerator = fakeDataGenerator;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(TripiumTestTaskApplication.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+//        fakeDataGenerator.fillInData(); // Uncomment for generating fake data
         Scanner scanner = new Scanner(System.in);
 
-        log.info("Hi, there! Please enter the console command to retrieve data");
+        System.out.println("Hi, there! Please enter the console command to retrieve data\n");
 
         while (true) {
             System.out.print("> ");
             String input = scanner.nextLine();
-            log.info(commandHandler.dispatch(input));
+            if (input.matches("\\s+exit\\s+")) {
+                break;
+            }
+            System.out.println(consoleCommandHandler.getResponse(input));
         }
     }
+
 }

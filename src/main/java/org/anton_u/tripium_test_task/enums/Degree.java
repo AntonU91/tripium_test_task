@@ -1,8 +1,5 @@
 package org.anton_u.tripium_test_task.enums;
 
-import lombok.Getter;
-
-@Getter
 public enum Degree {
     ASSISTANT("assistant"),
     ASSOCIATE_PROFESSOR("associate_professor"),
@@ -13,4 +10,8 @@ public enum Degree {
     }
 
     private final String degree;
+
+    public String getDegree() {
+        return degree;
+    }
 }

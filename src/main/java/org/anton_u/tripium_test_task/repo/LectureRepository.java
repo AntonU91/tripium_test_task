@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
 
-    @Query(
-            value = "from Lecture l where l.name like :pattern or l.surname like :pattern")
-    List<Lecture> findAllLecturesByPattern( @Param("pattern") String pattern);
+    @Query(value = "FROM Lecture l WHERE l.name LIKE CONCAT( '%',:pattern, '%') or l.surname LIKE CONCAT( '%',:pattern, '%')")
+    List<Lecture> findAllLecturesByPattern(@Param("pattern") String pattern);
 }

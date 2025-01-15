@@ -7,29 +7,35 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
-  Lecture findHeadByName(String departmentName);
+    @Query("SELECT d FROM Department d LEFT JOIN FETCH d.lectures WHERE d.id = :id")
+    Optional<Department> findById(@Param(value = "id") Long id);
 
-  List<Lecture> findAllLecturesByName(String departmentName);
+    @Query("SELECT d.head FROM Department d WHERE LOWER(d.name) = LOWER(:departmentName)")
+    Lecture findHeadByName(@Param(value = "departmentName") String departmentName);
+
+    @Query("SELECT l FROM Department d JOIN d.lectures l  WHERE LOWER(d.name) = LOWER(:departmentName)")
+    List<Lecture> findAllLecturesFromDepartmentByName(String departmentName);
 
 
-  @Query(nativeQuery = true,
-         value = "SELECT avg(l.salary) as avg_salary " +
-                 "FROM lectures l " +
-                 "JOIN department_lecture dl ON  l.id = dl.id " +
-                 "JOIN departments d ON d.id = dl.id " +
-                 "WHERE d.name = :departmentName")
-  Integer getAverageSalaryByName(@Param("departmentName") String departmentName);
+    @Query(nativeQuery = true,
+           value = "SELECT avg(l.salary) as avg_salary " +
+                   "FROM lectures l " +
+                   "JOIN department_lecture dl ON  l.id = dl.lecture_id " +
+                   "JOIN departments d ON d.id = dl.department_id " +
+                   "WHERE LOWER(d.name) = LOWER(:departmentName)")
+    Integer getAverageSalaryByName(@Param("departmentName") String departmentName);
 
-  @Query(nativeQuery = true,
-         value = "SELECT count(*) as empl_count " +
-                 "FROM lectures l " +
-                 "JOIN department_lecture dl ON  l.id = dl.id " +
-                 "JOIN departments d ON d.id = dl.id " +
-                 "WHERE d.name = :departmentName")
-  Integer getLecturesCountByName(String departmentName);
+    @Query(nativeQuery = true,
+           value = "SELECT count(*) as empl_count " +
+                   "FROM lectures l " +
+                   "JOIN department_lecture dl ON  l.id = dl.lecture_id " +
+                   "JOIN departments d ON d.id = dl.department_id " +
+                   "WHERE LOWER(d.name) = LOWER(:departmentName)")
+    Integer getLecturesCountByName(@Param("departmentName") String departmentName);
 
 }
