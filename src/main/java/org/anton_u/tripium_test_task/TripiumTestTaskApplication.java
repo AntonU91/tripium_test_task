@@ -1,9 +1,6 @@
 package org.anton_u.tripium_test_task;
 
-import lombok.extern.slf4j.Slf4j;
 import org.anton_u.tripium_test_task.comands_handler.ConsoleCommandHandler;
-import org.anton_u.tripium_test_task.repo.DepartmentRepository;
-import org.anton_u.tripium_test_task.repo.LectureRepository;
 import org.anton_u.tripium_test_task.util.FakeDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +15,7 @@ public class TripiumTestTaskApplication implements CommandLineRunner {
     private final FakeDataGenerator fakeDataGenerator;
 
     @Autowired
-    public TripiumTestTaskApplication(ConsoleCommandHandler consoleCommandHandler, LectureRepository lectureRepository, DepartmentRepository departmentRepository, FakeDataGenerator fakeDataGenerator) {
+    public TripiumTestTaskApplication(ConsoleCommandHandler consoleCommandHandler, FakeDataGenerator fakeDataGenerator) {
         this.consoleCommandHandler = consoleCommandHandler;
         this.fakeDataGenerator = fakeDataGenerator;
     }
@@ -29,7 +26,7 @@ public class TripiumTestTaskApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//        fakeDataGenerator.fillInData(); // Uncomment for generating fake data
+//      fakeDataGenerator.fillInData(); // Uncomment for generating fake data
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Hi, there! Please enter the console command to retrieve data\n");
@@ -42,6 +39,7 @@ public class TripiumTestTaskApplication implements CommandLineRunner {
             }
             System.out.println(consoleCommandHandler.getResponse(input));
         }
+        System.out.println("Bye-bye...");
     }
 
 }
