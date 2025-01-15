@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Scanner;
+import static org.anton_u.tripium_test_task.util.OutputText.BYE_TEXT;
+import static org.anton_u.tripium_test_task.util.OutputText.GREETING_TEXT;
 
 @SpringBootApplication
 public class TripiumTestTaskApplication implements CommandLineRunner {
@@ -29,7 +31,7 @@ public class TripiumTestTaskApplication implements CommandLineRunner {
 //      fakeDataGenerator.fillInData(); // Uncomment for generating fake data
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Hi, there! Please enter the console command to retrieve data\n");
+        System.out.println(GREETING_TEXT);
 
         while (true) {
             System.out.print("> ");
@@ -39,7 +41,7 @@ public class TripiumTestTaskApplication implements CommandLineRunner {
             }
             System.out.println(consoleCommandHandler.getResponse(input));
         }
-        System.out.println("Bye-bye...");
+        System.out.println(BYE_TEXT);
     }
 
 }

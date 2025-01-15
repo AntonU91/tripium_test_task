@@ -35,7 +35,7 @@ public class FakeDataGenerator {
             Lecture lecture = new Lecture();
             lecture.setName(faker.name().firstName());
             lecture.setSurname(faker.name().lastName());
-            lecture.setSalary((double) faker.number().numberBetween(800, 2000));
+            lecture.setSalary((double) faker.number().numberBetween(800, 1500));
             lecture.setDegree(Degree.values()[faker.random().nextInt(0, 2)]);
             lectures.add(lectureRepository.save(lecture));
         }
@@ -46,7 +46,7 @@ public class FakeDataGenerator {
             department.setHead(lectures.get(i));
             department.setName(DepartmentName.values()[i].getName());
 
-            for (int j = 0; j < lectures.size() / 2; j++) {
+            for (int j = 0; j < lectures.size() / 4; j++) {
                 Integer randomId = faker.random().nextInt(1, lectures.size());
                 Lecture lecture = lectureRepository.findById(Long.valueOf(randomId)).orElseThrow(Exception::new);
                 department.addLecture(lecture);

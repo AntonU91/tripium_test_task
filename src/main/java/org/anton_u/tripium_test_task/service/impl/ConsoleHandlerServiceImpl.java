@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class ConsoleHandlerServiceImpl implements ConsoleHandlerService {
+    private static final String NAME_SURNAME_PATTERN = "%s %s";
+    private static final String KEY_VALUE_PATTERN = "%s - %s";
     private final DepartmentRepository departmentRepository;
     private final LectureRepository lectureRepository;
 
@@ -26,7 +28,7 @@ public class ConsoleHandlerServiceImpl implements ConsoleHandlerService {
     public String findHeadByName(String departmentName) {
         Lecture head = departmentRepository.findHeadByName(departmentName);
         if (head != null) {
-            String nameAndSurname = String.format("%s %s", head.getName(), head.getSurname());
+            String nameAndSurname = String.format(NAME_SURNAME_PATTERN, head.getName(), head.getSurname());
             return String.format("Head of %s department is %s", departmentName, nameAndSurname);
         }
         return String.format("There is no data with %s", departmentName);
@@ -45,7 +47,7 @@ public class ConsoleHandlerServiceImpl implements ConsoleHandlerService {
                 .collect(Collectors.groupingBy((Lecture::getDegree), Collectors.counting()));
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Degree, Long> entry : groupedMap.entrySet()) {
-            result.append(String.format("%s - %s\n", entry.getKey().getDegree(), entry.getValue()));
+            result.append(String.format(KEY_VALUE_PATTERN + "\n", entry.getKey().getDegree(), entry.getValue()));
         }
         return result.toString();
     }
@@ -79,10 +81,10 @@ public class ConsoleHandlerServiceImpl implements ConsoleHandlerService {
         for (int i = 0; i < allLecturesByPattern.size(); i++) {
             lecture = allLecturesByPattern.get(i);
             if (i + 1 == allLecturesByPattern.size()) {
-                result.append(String.format("%s %s.", lecture.getName(), lecture.getSurname()));
+                result.append(String.format(NAME_SURNAME_PATTERN + ".", lecture.getName(), lecture.getSurname()));
                 break;
             }
-            result.append(String.format("%s %s,", lecture.getName(), lecture.getSurname()));
+            result.append(String.format(NAME_SURNAME_PATTERN + ",", lecture.getName(), lecture.getSurname()));
         }
         return result.toString();
     }
