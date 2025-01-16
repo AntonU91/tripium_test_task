@@ -13,6 +13,7 @@ import static org.anton_u.tripium_test_task.util.OutputText.GREETING_TEXT;
 @SpringBootApplication
 public class TripiumTestTaskApplication implements CommandLineRunner {
 
+    private static final String EXIT_COMMAND_REGEX = "\\s+exit\\s+";
     private final ConsoleCommandHandler consoleCommandHandler;
     private final FakeDataGenerator fakeDataGenerator;
 
@@ -36,7 +37,7 @@ public class TripiumTestTaskApplication implements CommandLineRunner {
         while (true) {
             System.out.print("> ");
             String input = scanner.nextLine();
-            if (input.matches("\\s+exit\\s+")) {
+            if (input.matches(EXIT_COMMAND_REGEX)) {
                 break;
             }
             System.out.println(consoleCommandHandler.getResponse(input));
