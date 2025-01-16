@@ -13,7 +13,7 @@ import static org.anton_u.tripium_test_task.util.OutputText.GREETING_TEXT;
 @SpringBootApplication
 public class TripiumTestTaskApplication implements CommandLineRunner {
 
-    private static final String EXIT_COMMAND_REGEX = "\\s+exit\\s+";
+    private static final String EXIT_COMMAND_REGEX = "\\s*exit\\s*";
     private final ConsoleCommandHandler consoleCommandHandler;
     private final FakeDataGenerator fakeDataGenerator;
 
