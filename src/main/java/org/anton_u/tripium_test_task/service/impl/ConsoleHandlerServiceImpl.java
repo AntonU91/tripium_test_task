@@ -84,7 +84,7 @@ public class ConsoleHandlerServiceImpl implements ConsoleHandlerService {
                 result.append(String.format(NAME_SURNAME_PATTERN + ".", lecture.getName(), lecture.getSurname()));
                 break;
             }
-            result.append(String.format(NAME_SURNAME_PATTERN + ",", lecture.getName(), lecture.getSurname()));
+            result.append(String.format(NAME_SURNAME_PATTERN + ", ", lecture.getName(), lecture.getSurname()));
         }
         return result.toString();
     }
