@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -15,7 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "departments")
+@Table(name = "departments",
+       indexes = {@Index(name = "idx_name", columnList = "department")})
 public class Department {
 
     @Id
@@ -43,7 +45,7 @@ public class Department {
         lecture.getDepartments().add(this);
     }
 
-    public void removeTag(Lecture lecture) {
+    public void removeLecture(Lecture lecture) {
         lectures.remove(lecture);
         lecture.getDepartments().remove(this);
     }
